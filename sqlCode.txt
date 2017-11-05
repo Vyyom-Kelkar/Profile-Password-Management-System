@@ -10,6 +10,11 @@ CREATE TABLE Admin_Setting(
 	PRIMARY KEY (company_name),
 );
 
+INSERT INTO Admin_Setting values
+	('Google',15,1,1,1,1,30),
+	('Bad Company',5,0,0,0,0,300);
+
+
 CREATE TABLE Users (
     ID				INT				NOT NULL,
 	username		VARCHAR(50)		NOT NULL,
@@ -23,6 +28,10 @@ CREATE TABLE Users (
 	FOREIGN KEY (company_name) REFERENCES Admin_Setting(company_name)
 );
 
+INSERT INTO Users values
+	(1,'Brett','doggy',1,'thisisemail@email.com','Google','614-234-5464',1996-02-12),
+	(1,'Vyyom','catty',1,'thisisemail@email.com','Bad Company','666-666-6669',1403-03-11);
+
 CREATE TABLE Old_Password (
     ID				INT			NOT NULL,
 	userID			INT		NOT NULL,
@@ -30,6 +39,12 @@ CREATE TABLE Old_Password (
 	PRIMARY KEY (ID),
 	FOREIGN KEY (userID) REFERENCES Users(ID)
 );
+
+INSERT INTO Old_Password values
+	(1, 1, 'sportsball'),
+	(2, 1, 'computers'),
+	(3, 2, 'ihatemen'),
+	(4, 2, 'hailsatan');
 
 CREATE TABLE Common_Passwords (
     ID				INT			NOT NULL,
