@@ -1,4 +1,4 @@
-CREATE TABLE Admin_Setting(
+CREATE TABLE Admin_Setting (
 	company_name	VARCHAR(50)	NOT NULL,
 	password_length INT		NOT NULL,
 	require_caps	INT		NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE Admin_Setting(
 	require_number	INT		NOT NULL,
 	require_special	INT		NOT NULL,
 	expiration_time	INT		NOT NULL,
-	PRIMARY KEY (company_name),
+	PRIMARY KEY (company_name)
 );
 
 CREATE TABLE Users (
@@ -33,5 +33,5 @@ CREATE TABLE Old_Password (
 CREATE TABLE Common_Passwords (
     ID				INT			NOT NULL,
 	hashedPassword	VARCHAR(50)	NOT NULL,
-	PRIMARY KEY (ID),
+	PRIMARY KEY (ID)
 );

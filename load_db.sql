@@ -1,3 +1,18 @@
+INSERT INTO Admin_Setting values
+('Google',15,1,1,1,1,30),
+('Bad Company',5,0,0,0,0,300);
+
+INSERT INTO Users values
+(1,'Brett','doggy',1,'thisisemail@email.com','Google','614-234-5464',1996-02-12),
+(2,'Vyyom','catty',1,'thisisemail@email.com','Bad Company','666-666-6669',1403-03-11);
+
+
+INSERT INTO Old_Password values
+(1, 1, 'sportsball'),
+(2, 1, 'computers'),
+(3, 2, 'ihatemen'),
+(4, 2, 'hailsatan');
+
 INSERT INTO Common_Passwords values
 (1, 'password'),
 (2, '12345678'),
