@@ -1,10 +1,10 @@
-#https://github.com/sagaragarwal94/python_rest_flask/blob/master/server.py
+# https://github.com/sagaragarwal94/python_rest_flask/blob/master/server.py
 
 from flask import Flask, request
 from flask_restful import Resource, Api
 from sqlalchemy import create_engine
 from json import dumps
-from flask_jsonpify import jsonify
+from flask import jsonify
 
 db_connect = create_engine('sqlite:///test.sqlite')
 app = Flask(__name__)
@@ -29,7 +29,7 @@ class Old_Password(Resource):
         query = conn.execute("select * from old_password where userId = %d"  %int(user_Id))
         result = {'old_password': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
         return jsonify(result)
-        
+
 
 api.add_resource(Admin_Setting, '/admin_setting') # Route_1
 api.add_resource(Users, '/users') # Route_2
