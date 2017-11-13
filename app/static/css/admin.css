@@ -1,12 +1,7 @@
 body{
-	background-image: url('/static/img/dylan.jpg');
+	background-image: url('/static/img/doors.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
-}
-
-h1{
-	color: black;
-	text-shadow: 0 2px 2px grey;
 }
 
 .btn{
@@ -17,14 +12,11 @@ h1{
 
 .btn:hover{
 	color: black;
-	background: white;
+	background-color: white;
 	border-color: black;
 }
 
-#email{
-	color: blue;
-}
-
-#email:focus{
-	border-color:blue;
+h1{
+	color: black;
+	text-shadow: 0 2px 2px grey;
 }
