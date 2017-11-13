@@ -1,3 +1,4 @@
+import uuid
 from datetime import date
 
 from django.utils.crypto import constant_time_compare, salted_hmac
@@ -11,6 +12,11 @@ class ResetTokenGenerator:
     """
     key_salt = "Profile.Password.Management.System.ResetTokenGenerator"
     secret = 'Gr8Responsibility'
+
+    def make_uuid_token(self):
+        token = uuid.uuid4()
+        return token
+
 
     def make_token(self, user_email):
         # Return a token that can be used once to reset password
