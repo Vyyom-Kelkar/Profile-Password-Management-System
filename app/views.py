@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect
 from app import app
-from .forms import LoginForm, SignupForm, NewForm, ForgotForm
+from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm
 
 @app.route('/')
 @app.route('/index')
@@ -29,3 +29,22 @@ def newCredentials():
 def forgot():
 	form = ForgotForm()
 	return render_template('forgot.html', title = 'Forgotten Password', form = form)
+
+@app.route('/decisions')
+def decisions():
+	return render_template('decisions.html', title = 'Main')
+
+@app.route('/change')
+def change():
+	form = ChangeForm()
+	return render_template('change.html', title = 'Change', form = form)
+
+@app.route('/confirm')
+def confirm():
+	form = LoginForm()
+	return render_template('confirm.html', title = 'Admin', form = form)
+
+@app.route('/admin')
+def admin():
+	form = AdminForm()
+	return render_template('admin.html', title = 'Admin', form = form)

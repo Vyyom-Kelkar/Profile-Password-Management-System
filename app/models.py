@@ -1,6 +1,9 @@
 from app import db
+from app import app
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import scoped_session, sessionmaker
+from flask_restless import APIManager
 
 Base = declarative_base()
 
@@ -23,7 +26,6 @@ class User(Base):
 
 	ID = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(50), nullable=False)
-	username = db.Column(db.String(50), nullable=False)
 	current_password = db.Column(db.String(50), nullable=False)
 	is_admin = db.Column(db.Boolean, nullable=False)
 	email = db.Column(db.String(50), unique=True, nullable=False)
@@ -56,4 +58,15 @@ class Common_Password(Base):
 		return '<Common_Password %r>' %(self.nickname)
 
 engine = create_engine('sqlite:///db/app.db')
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+mysession = scoped_session(Session)
 Base.metadata.create_all(engine)
+
+
+manager = APIManager(app, session=mysession)
+manager.create_api(User, methods=['GET', 'POST', 'PATCH'])
+manager.create_api(Admin_Setting, methods=['GET', 'POST', 'PATCH'])
+manager.create_api(Old_Password, methods=['GET', 'POST', 'PATCH'])
+manager.create_api(Common_Password, methods=['GET', 'POST', 'PATCH'])
+
+print (mysession.query(User).filter_by(ID=1).all())
