@@ -3,9 +3,9 @@ INSERT INTO Admin_Setting values
 ('Bad Company',5,0,0,0,0,300);
 
 INSERT INTO User values
-(1,'Brett','doggy',1,'thisisemail@email.com','Google','614-234-5464',1996-02-12),
-(2,'Vyyom','catty',1,'thisemail@email.com','Bad Company','666-666-6669',1403-03-11),
-(3,'A','catty',1,'thisisnotemail@email.com','Bad Company','666-666-6669',1403-03-11);
+(1,'Brett','doggy',1,'thisisemail@email.com','Google','614-234-5464','1996-02-12 08:08:08.174','akjv;asv;av;alkv','1996-02-13 08:08:08.174'),
+(2,'Vyyom','catty',1,'thisemail@email.com','Bad Company','666-666-6669','1403-03-11 01:03:04.232','akjv;asv;av;alafsd','1996-02-13 08:09:08.174'),
+(3,'A','catty',1,'thisisnotemail@email.com','Bad Company','666-666-6669','1403-03-11 02:01:04.99383','akjv;asv;av;fadsfsdfv','1996-02-13 10:08:08.174');
 
 INSERT INTO Old_Password values
 (1, 1, 'sportsball'),
