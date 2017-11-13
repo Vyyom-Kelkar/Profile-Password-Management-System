@@ -18,9 +18,6 @@ class Admin_Setting(Base):
 	require_special = db.Column(db.Boolean, nullable=False)
 	expiration_days = db.Column(db.Integer, nullable=False)
 
-	def __repr__(self):
-		return '<Admin_Setting %r>' %(self.nickname)
-
 class User(Base):
 	__tablename__ = 'User'
 
@@ -32,10 +29,9 @@ class User(Base):
 	company_name = db.Column(db.String(50), db.ForeignKey('Admin_Setting.company_name'), nullable=False)
 	phone_number = db.Column(db.String(12), nullable=False)
 	password_last_set = db.Column(db.DateTime, nullable=False)
+	token = db.Column(db.String(30), nullable=True)
+	last_login = db.Column(db.DateTime, nullable=False)
 	Admin_Setting = db.relationship(Admin_Setting)
-
-	def __repr__(self):
-		return '<User %r>' %(self.nickname)
 
 class Old_Password(Base):
 	__tablename__ = 'Old_Password'
@@ -45,17 +41,11 @@ class Old_Password(Base):
 	hashed_password = db.Column(db.String(50), nullable=False)
 	User = db.relationship(User)
 
-	def __repr__(self):
-		return '<Old_Password %r>' %(self.nickname)
-
 class Common_Password(Base):
 	__tablename__ = 'Common_Password'
 
 	ID = db.Column(db.Integer, primary_key=True)
 	hashed_password = db.Column(db.String(50), nullable=False)
-
-	def __repr__(self):
-		return '<Common_Password %r>' %(self.nickname)
 
 engine = create_engine('sqlite:///db/app.db')
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -68,5 +58,3 @@ manager.create_api(User, methods=['GET', 'POST', 'PATCH'])
 manager.create_api(Admin_Setting, methods=['GET', 'POST', 'PATCH'])
 manager.create_api(Old_Password, methods=['GET', 'POST', 'PATCH'])
 manager.create_api(Common_Password, methods=['GET', 'POST', 'PATCH'])
-
-print (mysession.query(User).filter_by(ID=1).all())
