@@ -15,8 +15,14 @@ li{
 
 .btn{
 	color: white;
-	background: repeating-radial-gradient(circle at center,red, black 5%, blue 5%, pink 10%);
+	background-color: black;
 	border-color: white;
+}
+
+.btn:hover{
+	color: black;
+	background: white;
+	border-color: black;
 }
 
 #email{

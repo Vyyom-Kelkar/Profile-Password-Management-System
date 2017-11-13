@@ -1,0 +1,17 @@
+body{
+	background-image: url('/static/img/ccr.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.btn{
+	color: white;
+	background-color: grey;
+	border-color: white;
+}
+
+.btn:hover{
+	color: grey;
+	background-color: white; 
+	border-color: grey;
+}
