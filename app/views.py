@@ -54,8 +54,8 @@ def forgotChange():
 	form = ForgotChangeForm()
 	return render_template('forgotChange.html', title = 'Forgot Change', form = form)
 
-@app.route('/forgotConfirmation')
+@app.route('/forgotConfirmation', methods = ['POST', 'GET'])
 def forgotConfirmation():
-	email = request.args['email']
+	email = request.form['email']
 	print email
 	return render_template('forgotConfirmation.html', title = 'Forgot Confirmation')
