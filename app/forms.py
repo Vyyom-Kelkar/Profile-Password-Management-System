@@ -35,3 +35,8 @@ class AdminForm(Form):
 	numeric = BooleanField('Password must contain numeric characters', validators = [DataRequired()])
 	special = BooleanField('Password must contain special characters (!@#$%*&)', validators = [DataRequired()])
 	expiration = IntegerField('Expiration', validators = [DataRequired()])
+
+class ForgotChangeForm(Form):
+	email = StringField('Email', validators = [DataRequired()])
+	password = PasswordField('Password', validators = [DataRequired()])
+	confirmPassword = PasswordField('Confirm Password', validators = [DataRequired()])

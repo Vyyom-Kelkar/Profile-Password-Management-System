@@ -68,5 +68,3 @@ manager.create_api(User, methods=['GET', 'POST', 'PATCH'])
 manager.create_api(Admin_Setting, methods=['GET', 'POST', 'PATCH'])
 manager.create_api(Old_Password, methods=['GET', 'POST', 'PATCH'])
 manager.create_api(Common_Password, methods=['GET', 'POST', 'PATCH'])
-
-print (mysession.query(User).filter_by(ID=1).all())
