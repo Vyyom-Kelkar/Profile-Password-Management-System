@@ -2,7 +2,7 @@ from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
 from similarityAlgorithm import similar
-from controllers import verify, testfunction 
+from controllers import verify, testfunction, uniqueEmail, getCompanyRequirements
 
 @app.route('/')
 @app.route('/index')
@@ -19,15 +19,21 @@ def login():
 @app.route('/signup', methods = ['GET', 'POST'])
 def signup():
 	form = SignupForm()
-	if request.method == 'POST':
+	if request.method == 'POST' and uniqueEmail(request):
+		session['name'] = request.form['name']
+		session['email'] = request.form['email']
 		session['company'] = request.form['company']
+		session['phone'] = request.form['phone']
+		session['userType'] = request.form['userType']
+		if request.form['userType'] == 'admin':
+			return redirect('/admin')		
 		return redirect('/newCredentials')
 	return render_template('signup.html', title = 'Sign Up', form = form)
 
 @app.route('/newCredentials', methods=['GET', 'POST'])
 def newCredentials():
 	form = NewForm()
-	print session['company']
+	requirements = getCompanyRequirements(session['company'])
 	return render_template('newCredentials.html', title = 'New', form = form)
 
 @app.route('/forgot')

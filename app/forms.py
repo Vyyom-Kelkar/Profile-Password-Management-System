@@ -12,7 +12,7 @@ class SignupForm(Form):
 	company = StringField('Company', validators = [DataRequired()])
 	address = StringField('Address', validators = [DataRequired()])
 	phone = IntegerField('Phone', validators = [DataRequired()])
-	userType = RadioField('User Type', choices = [('value', 'Admin'), ('value_two', 'Employee')])
+	userType = RadioField('User Type', choices = [('admin', 'Admin'), ('employee', 'Employee')])
 
 class NewForm(Form):
 	email = StringField('Email', validators = [DataRequired()])
