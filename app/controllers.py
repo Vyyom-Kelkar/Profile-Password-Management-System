@@ -53,3 +53,26 @@ def verify(request):
     return True
   else
     return False
+
+def uniqueEmail(request):
+  userEmail = request.form[email]
+  emails = mysession.query(User).all()
+  if userEmail in emails
+    return False
+  else
+    return True
+
+def companyExists(request):
+  userCompany = request.form[company]
+  company = mysession.query(Admin_Setting).filter_by(company_name=userCompany)
+  if(len(company)>0)
+    return True
+  else
+    return False
+
+def getCompanyRequirements(request):
+  userCompany = request.form[company]
+  companySettings = mysession.query(Admin_Setting).filter_by(company_name=userCompany).first()
+	
+	settingsArray = [settings.password_length,settings.require_caps,settings.require_lowercase,settings.require_number,settings.require_special,settings.expiration_days]
+	return settingsArray
