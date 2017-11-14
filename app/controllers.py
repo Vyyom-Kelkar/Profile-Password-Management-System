@@ -44,3 +44,12 @@ def testfunction(myemail):
 	data = mysession.query(User).filter_by(ID=9).all()
 	print data[0].ID
 	print data[0].email
+
+def verify(request):
+  userEmail = request.format(email)
+  UserPass = request.format(password)
+  pass = mysession.query(User).filter_by(email=userEmail).first()
+  if(pass == UserPass)
+    return True
+  else
+    return False
