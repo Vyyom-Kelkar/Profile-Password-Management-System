@@ -1,36 +1,44 @@
 function hasLowercase(str){
 	var lowercase = /[a-z]/
-	return lowercase.test(str)
+	return lowercase.test(str);
 }
 
 function hasUppercase(str){
 	var uppercase = /[A-Z]/
-	return uppercase.test(str)
+	return uppercase.test(str);
 }
 
 function hasUppercaseAsFirstLetter(str){
 	var firstLetter = str.substring(0,1);
-	return hasUppercase(firstLetter);
+	var restOfStr = str.substring(1);
+	if (hasUppercase(lastLetter) && !hasUppercase(restOfStr)){
+		return True
+	}
+	return False;
 }
 
 function hasSpecial(str){
 	var special = /[!@#$%?'&*]/
-	return special.test(str)
+	return special.test(str);
 }
 
 function hasSpecialAsLastLetter(str){
-	var lastLetter = str.substring(str.length-1)
-	return hasSpecial(lastLetter)
+	var lastLetter = str.substring(str.length-1);
+	var restOfStr = str.substring(0,str.lenghth-1);
+	if (hasSpecial(lastLetter) && !hasSpecial(restOfStr)){
+		return True
+	}
+	return False;
 }
 
 function hasNumeric(str){
 	var numeric = /[0-9]/
-	return numeric.test(str)
+	return numeric.test(str);
 }
 
 function updateStrength(event){
 
-	input = $(event.target).val()
+	input = $(event.target).val();
 	var count = 0;
 	if (hasNumeric(input)){
 		count = count + 1;

@@ -191,7 +191,7 @@ def similar(newPassword, oldPasswords):
     if(similarityDifficulty == 4):
         numMaxCheck = 12
         generatedPasswords.append( (newPassword) )
-        generatedPasswords.extend( (rootWord(newPassword)) )
+        generatedPasswords.append( (root ) )
         generatedPasswords.extend( duplicateFront(newPassword))
         generatedPasswords.extend( deleteFirstSpecialChar(newPassword))
         generatedPasswords.extend( addSpecialCharacterToFront(newPassword))
@@ -217,9 +217,8 @@ def similar(newPassword, oldPasswords):
     print generatedPasswords
     for password in generatedPasswords:
         if (compareToOldPasswords(oldPasswords, password)):
-            return (False, "Too similar", rootWord)
+            return (False, "Too similar", root)
     hashedNewPassword = sha256_crypt.using(rounds=1100).hash(newPassword)
-
-    hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(rootWord)
+    hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(root)
     #print (True, hashedNewPassword, hashedRootWord, NewPassword, hashedRootWord)
     return (True, hashedNewPassword, hashedRootWord)
