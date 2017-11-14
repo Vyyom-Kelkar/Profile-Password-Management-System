@@ -35,7 +35,7 @@ def correctLength(password, passwordLength):
 def checkPasswordWithCompanySettings(settings, password):
    returnValue = True
    #whenever a requirement is not met return false
-   if not(correctLength(password, settings[0])):
+   if (correctLength(password, settings[0])):
        return False
    if ( settings[1] ):
        if not ( hasCapital(password) ):	

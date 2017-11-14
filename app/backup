@@ -23,18 +23,3 @@ def addCompany(request):
 	mysession.add(myCompany)
 	mysession.commit()
   
-def addUser(request):
-  	userId = request.form[ID]
-	userName = request.form[name]
-	userCurrPass = request.form[current_password]
-	adminStatus = request.form[is_admin]
-	userEmail = request.form[email]
-	userCompany = request.form[company_name]
-	userPhone = request.form[phone_number]
-	userLastSet = request.form[password_last_set]
-	userToken = request.form[token]
-	userLastLogin = request.form[last_login]
-
-  	myUser = User(ID=userId, name=userName, current_password=userCurrPass, is_admin=adminStatus, email=userEmail, company_name=userCompany, phone_number=userPhone, password_last_set=userLastSet, token=userToken, last_login=userLastLogin)
-  	mysession.add(myUser)
-	mysession.commit()

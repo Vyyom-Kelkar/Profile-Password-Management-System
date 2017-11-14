@@ -2,8 +2,9 @@ from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
 from similarityAlgorithm import similar
-from controllers import verify, testfunction, uniqueEmail, getCompanyRequirements
+from controllers import addUser, verify, mysession, testfunction, uniqueEmail, getCompanyRequirements
 from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
+from models import User
 
 @app.route('/')
 @app.route('/index')
@@ -35,12 +36,10 @@ def signup():
 def newCredentials():
 	form = NewForm()
 	requirements = getCompanyRequirements(session['company'])
-	for r in requirements:
-		print r
+	user = [session['name'], session['email'], session['company'], session['phone'], session['userType']]
 	if request.method == 'POST': #and checkPasswordWithCompanySettings(requirements, request.form['password']):
-		print request.form['password']
-		# call controller to add
-		print 'hi'
+		addUser(user, request.form['password'])
+		return redirect('/decisions')
 	return render_template('newCredentials.html', title = 'New', form = form)
 
 @app.route('/forgot')

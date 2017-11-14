@@ -69,3 +69,18 @@ def getCompanyRequirements(company):
 	settings = mysession.query(Admin_Setting).filter_by(company_name=company).first()
 	settingsArray = [settings.password_length,settings.require_caps,settings.require_lowercase,settings.require_number,settings.require_special,settings.expiration_days]
 	return settingsArray 
+
+def addUser(user, password):
+	today = datetime(1996, 1, 2, 3, 4, 5)
+	userName = user[0]
+	userCurrPass = password 
+	adminStatus = (user[4] == 'admin')
+	userEmail = user[1]
+	userCompany = user[2]
+	userPhone = user[3]
+	userLastSet = today
+	userLastLogin = today
+
+  	myUser = User(name=userName, current_password=userCurrPass, is_admin=adminStatus, email=userEmail, company_name=userCompany, phone_number=userPhone, password_last_set=userLastSet, token=None, last_login=userLastLogin)
+  	mysession.add(myUser)
+	mysession.commit()
