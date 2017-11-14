@@ -2,7 +2,7 @@ from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
 from similarityAlgorithm import similar
-from controllers import addUser, verify, mysession, testfunction, uniqueEmail, getCompanyRequirements
+from controllers import changePassword, getCompany, addUser, verify, mysession, testfunction, uniqueEmail, getCompanyRequirements
 from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
 from models import User
 
@@ -37,8 +37,8 @@ def newCredentials():
 	form = NewForm()
 	requirements = getCompanyRequirements(session['company'])
 	user = [session['name'], session['email'], session['company'], session['phone'], session['userType']]
-	if request.method == 'POST': #and checkPasswordWithCompanySettings(requirements, request.form['password']):
-		addUser(user, request.form['password'])
+	if request.method == 'POST' and checkPasswordWithCompanySettings(requirements, request.form['password']):
+		#addUser(user, request.form['password'])
 		return redirect('/decisions')
 	return render_template('newCredentials.html', title = 'New', form = form)
 
@@ -54,6 +54,11 @@ def decisions():
 @app.route('/change')
 def change():
 	form = ChangeForm()
+	if request.method == 'POST' and verify(request):
+		requirements = getCompany(request)
+		if checkPasswordWithCompanySettings(requirements, request.form['password']):
+				changePassword(request)
+				return redirect('/decisions')
 	return render_template('change.html', title = 'Change', form = form)
 
 @app.route('/confirm')

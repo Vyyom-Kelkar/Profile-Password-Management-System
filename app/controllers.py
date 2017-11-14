@@ -84,3 +84,14 @@ def addUser(user, password):
   	myUser = User(name=userName, current_password=userCurrPass, is_admin=adminStatus, email=userEmail, company_name=userCompany, phone_number=userPhone, password_last_set=userLastSet, token=None, last_login=userLastLogin)
   	mysession.add(myUser)
 	mysession.commit()
+
+def changePassword(request):
+	userEmail = request.form['email']
+	newPassword = request.form['password']
+	mysession.query(User).filter_by(email=userEmail).update({"current_password": newPassword})
+
+def getCompany(request):
+	userEmail = request.form['email']
+	user = mysession.query(User).filter_by(email=userEmail).first()
+	userCompany = user.company_name
+	return getCompanyRequirements(userCompany)

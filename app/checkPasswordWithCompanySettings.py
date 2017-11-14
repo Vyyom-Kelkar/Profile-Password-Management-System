@@ -1,10 +1,9 @@
 def hasCapital(password):
-    temp = password.upper()
-    if temp == password:
-    	return True
-    else:
-    	return False
-
+    for i in password:
+        if( i.isupper() ):
+            return True
+    return False
+        
 def hasNumeric(password):
     for index, c in enumerate(password):
     	if c.isdigit():
@@ -12,11 +11,10 @@ def hasNumeric(password):
     return False
 
 def hasLowercase(password):
-    temp = password.lower()
-    if temp == password:
-    	return True
-    else:
-    	return False
+    for i in password:
+        if( i.islower() ):
+            return True
+    return False
 
 def hasSpecial(password):
     specialCharsList = ["!", "@", "#", "$", "%", "?", "&"]
@@ -27,27 +25,26 @@ def hasSpecial(password):
     return False
 
 def correctLength(password, passwordLength):
-    if passwordLength > len(password):
+    if (int(passwordLength) > int(len(password))):
     	return False
     else:
         return True
 
 def checkPasswordWithCompanySettings(settings, password):
-   returnValue = True
    #whenever a requirement is not met return false
-   if (correctLength(password, settings[0])):
+   if not (correctLength(password, settings[0])):
        return False
    if ( settings[1] ):
-       if not ( hasCapital(password) ):	
+       if not( hasCapital(password) ):
            return False
    if ( settings[2] ):
-       if not ( hasLowercase ):
+       if not( hasLowercase(password) ):
            return False
    if ( settings[3] ):
-       if not ( hasNumeric ):
+       if not ( hasNumeric(password) ):
            return False
    if ( settings[4] ):
-       if not ( hasSpecial ):
+       if not ( hasSpecial(password) ):
            return False
    return True	
 
