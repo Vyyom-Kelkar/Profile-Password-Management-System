@@ -1,5 +1,24 @@
 import collections
+from passlib.hash import sha256_crypt
 import sys
+
+#old passwords are hashed new password is not
+def compareToOldPasswords(oldPasswords, newPassword):
+    for password in oldPasswords:
+        if ( sha256_crypt.verify(newPassword, password) ):
+            return True
+    return False
+
+def rootWord(newPassword):
+    charList = []
+    for chars in newPassword:
+        if chars.isalpha():
+            charList.append(chars)
+    password = ''.join(charList)
+    password.lower()
+    return password
+
+
 
 #def main():
 def newPasswordToOldPasswordComparison(newPassword, oldPassword):
@@ -18,10 +37,15 @@ def newPasswordToOldPasswordComparison(newPassword, oldPassword):
     print percent
     if (percent > .7):
 #        print False
-        return False
+        return (False, "Too similar", rootWord)
     else:
-#        print True
-        return True
+        if (compareToOldPasswords(oldPasswords, newPassword)):
+            return (False, "Too similar", rootWord)
+        if (compareToOldPasswords(oldPasswords, rootWord)):
+            return (False, "Too similar", rootWord)
+        hashedNewPassword = sha256_crypt.using(rounds=1100).hash(newPassword)
+        hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(rootWord)
+        return (True, hashedNewPassword, hashedRootWord)
 
 #if __name__ == "__main__":
 #    main()
