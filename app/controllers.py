@@ -55,24 +55,55 @@ def verify(request):
     return False
 
 def uniqueEmail(request):
-  userEmail = request.form[email]
-  emails = mysession.query(User).all()
-  if userEmail in emails
-    return False
-  else
-    return True
+	userEmail = request.form[email]
+	emails = mysession.query(User).all()
+	if userEmail in emails
+		return False
+	else
+		return True
 
 def companyExists(request):
-  userCompany = request.form[company]
-  company = mysession.query(Admin_Setting).filter_by(company_name=userCompany)
-  if(len(company)>0)
-    return True
-  else
-    return False
+	userCompany = request.form[company]
+	company = mysession.query(Admin_Setting).filter_by(company_name=userCompany)
+	if(len(company)>0)
+		return True
+	else
+		return False
 
 def getCompanyRequirements(request):
-  userCompany = request.form[company]
-  companySettings = mysession.query(Admin_Setting).filter_by(company_name=userCompany).first()
+	userCompany = request.form[company]
+	companySettings = mysession.query(Admin_Setting).filter_by(company_name=userCompany).first()
 	
 	settingsArray = [settings.password_length,settings.require_caps,settings.require_lowercase,settings.require_number,settings.require_special,settings.expiration_days]
 	return settingsArray
+
+def addCompany(request):
+	compName = request.form[company_name]
+	passLength = request.form[password_length]
+	requireCaps = request.form[require_caps]
+	requireLower = request.form[require_lowercase]
+	requireNum = request.form[require_number]
+	requireSpec = request.form[require_special]
+	expDays = request.form[expiration_days]
+  
+	myCompany = Admin_Setting(company_name=compName, password_length=passLength, require_caps=requireCaps, require_lowercase=requireLower, require_number, requireNum, require_special=requireSpec, expiration_days=expDays)
+  	
+	mysession.add(myCompany)
+	mysession.commit()
+  
+def addUser(request):
+  	userId = request.form[ID]
+	userName = request.form[name]
+	userCurrPass = request.form[current_password]
+	adminStatus = request.form[is_admin]
+	userEmail = request.form[email]
+	userCompany = request.form[company_name]
+	userPhone = request.form[phone_number]
+	userLastSet = request.form[password_last_set]
+	userToken = request.form[token]
+	userLastLogin = request.form[last_login]
+
+  	myUser = User(ID=userId, name=userName, current_password=userCurrPass, is_admin=adminStatus, email=userEmail, company_name=userCompany, phone_number=userPhone, password_last_set=userLastSet, token=userToken, last_login=userLastLogin)
+  	mysession.add(myUser)
+	mysession.commit()
+  
