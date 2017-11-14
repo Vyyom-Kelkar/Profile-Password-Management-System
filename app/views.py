@@ -1,6 +1,7 @@
 from flask import render_template, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
+from controllers import testfunction
 
 @app.route('/')
 @app.route('/index')
@@ -54,8 +55,8 @@ def forgotChange():
 	form = ForgotChangeForm()
 	return render_template('forgotChange.html', title = 'Forgot Change', form = form)
 
-@app.route('/forgotConfirmation', methods = ['POST', 'GET'])
+@app.route('/forgotConfirmation', methods = ['POST'])
 def forgotConfirmation():
 	email = request.form['email']
-	print email
+	testfunction(email)
 	return render_template('forgotConfirmation.html', title = 'Forgot Confirmation')

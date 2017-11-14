@@ -1,6 +1,7 @@
 from app import db
 from models import mysession, User, Admin_Setting, Old_Password, Common_Password, engine
 from sqlalchemy import update
+from datetime import datetime
 
 
 '''
@@ -33,3 +34,12 @@ mysession.add(row)
 
 '''
 
+def testfunction(myemail):
+	login = datetime(1996, 1, 2, 3, 4, 5)
+	print login
+	myuser = User(ID=9,name='Brett',current_password='doggy',is_admin=1,email=myemail,company_name='Google',phone_number='614-234-5464',password_last_set=login, token='akjv;asv;av;alkv',last_login=login)
+	mysession.add(myuser)
+	mysession.commit()
+	data = mysession.query(User).filter_by(ID=9).all()
+	print data[0].ID
+	print data[0].email

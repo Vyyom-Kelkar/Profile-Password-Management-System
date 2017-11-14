@@ -48,9 +48,9 @@ class Common_Password(Base):
 	hashed_password = db.Column(db.String(50), nullable=False)
 
 engine = create_engine('sqlite:///db/app.db')
-Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-mysession = scoped_session(Session)
 Base.metadata.create_all(engine)
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+mysession = Session() 
 
 
 manager = APIManager(app, session=mysession)

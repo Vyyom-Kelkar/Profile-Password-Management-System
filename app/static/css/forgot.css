@@ -1,7 +1,8 @@
 body{
-	background-image: url('/static/img/dylan.jpg');
+	background: url('/static/img/dylan.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
+
 }
 
 h1{
