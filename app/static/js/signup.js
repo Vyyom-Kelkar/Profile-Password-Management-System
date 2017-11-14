@@ -8,9 +8,19 @@ function hasUppercase(str){
 	return uppercase.test(str)
 }
 
+function hasUppercaseAsFirstLetter(str){
+	var firstLetter = str.substring(0,1);
+	return hasUppercase(firstLetter);
+}
+
 function hasSpecial(str){
 	var special = /[!@#$%?'&*]/
 	return special.test(str)
+}
+
+function hasSpecialAsLastLetter(str){
+	var lastLetter = str.substring(str.length-1)
+	return hasSpecial(lastLetter)
 }
 
 function hasNumeric(str){
@@ -21,6 +31,19 @@ function hasNumeric(str){
 function updateStrength(event){
 
 	input = $(event.target).val()
+	var count = 0;
+	if (hasNumeric){
+		count = count + 1;
+	}
+	if (hasUppercase && !hasUppercaseAsFirstLetter){
+		count = count + 1;
+	}
+	if (hasLowercase){
+		count = count + 1;
+	}
+	if(hasSpecial && !hasSpecialAsLastLetter){
+		count = count + 1;
+	}
 	
 	if(input.length == 0){
 		$(".progress-bar").removeClass("great");
@@ -42,7 +65,7 @@ function updateStrength(event){
 		$(".progress-bar").removeClass("bg-warning");
 		$(".progress-bar").addClass("bg-danger");
 	}
-	else if(hasLowercase(input) && hasUppercase(input) && hasSpecial(input) && hasNumeric(input)){
+	else if(count == 4){
 		$(".progress-bar").removeClass("weak");
 		$(".progress-bar").removeClass("good");
 		$(".progress-bar").removeClass("intermediate");
@@ -52,7 +75,7 @@ function updateStrength(event){
 		$(".progress-bar").removeClass("bg-warning");
 		$(".progress-bar").addClass("bg-success");
 	}
-	else if(hasLowercase(input) && hasUppercase(input) && hasNumeric(input)){
+	else if(count == 3){
 		$(".progress-bar").removeClass("weak");
 		$(".progress-bar").removeClass("great");
 		$(".progress-bar").removeClass("intermediate");
@@ -62,7 +85,7 @@ function updateStrength(event){
 		$(".progress-bar").removeClass("bg-warning");
 		$(".progress-bar").addClass("bg-info");
 	}
-	else if(hasLowercase(input) && hasUppercase(input)){
+	else if(count == 2){
 		$(".progress-bar").removeClass("weak");
 		$(".progress-bar").removeClass("good");
 		$(".progress-bar").removeClass("great");
