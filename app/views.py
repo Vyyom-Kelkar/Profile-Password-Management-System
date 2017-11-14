@@ -1,8 +1,9 @@
-from flask import render_template, request, flash, redirect
+from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
 from similarityAlgorithm import similar
-from controllers import testfunction
+from controllers import verify, testfunction, uniqueEmail, getCompanyRequirements
+from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
 
 @app.route('/')
 @app.route('/index')
@@ -12,22 +13,34 @@ def index():
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	form = LoginForm()
-	if request.method == 'POST' and form.validate_on_submit():
-		flash('Login requested for OpenID="%s", remember_me=%s' % (form.openid.data, str(form.remember_me.data)))
-		return redirect('/index')
+	if request.method == 'POST' and verify(request):
+		return redirect('/decisions')
 	return render_template('login.html', title = 'Sign In', form = form)
 
-@app.route('/signup')
+@app.route('/signup', methods = ['GET', 'POST'])
 def signup():
 	form = SignupForm()
+	if request.method == 'POST' and uniqueEmail(request):
+		session['name'] = request.form['name']
+		session['email'] = request.form['email']
+		session['company'] = request.form['company']
+		session['phone'] = request.form['phone']
+		session['userType'] = request.form['userType']
+		if request.form['userType'] == 'admin':
+			return redirect('/admin')		
+		return redirect('/newCredentials')
 	return render_template('signup.html', title = 'Sign Up', form = form)
 
 @app.route('/newCredentials', methods=['GET', 'POST'])
 def newCredentials():
 	form = NewForm()
-	#if request.method == 'POST' and form.validate():
-		# validate user doesnt exist
-		# similarity algorithm 
+	requirements = getCompanyRequirements(session['company'])
+	for r in requirements:
+		print r
+	if request.method == 'POST': #and checkPasswordWithCompanySettings(requirements, request.form['password']):
+		print request.form['password']
+		# call controller to add
+		print 'hi'
 	return render_template('newCredentials.html', title = 'New', form = form)
 
 @app.route('/forgot')
