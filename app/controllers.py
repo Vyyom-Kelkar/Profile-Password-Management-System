@@ -53,3 +53,11 @@ def verify(request):
     return True
   else
     return False
+
+def uniqueEmail(request):
+  userEmail = request.form[email]
+  emails = mysession.query(User).all()
+  if userEmail in emails
+    return False
+  else
+    return True
