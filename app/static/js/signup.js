@@ -32,16 +32,16 @@ function updateStrength(event){
 
 	input = $(event.target).val()
 	var count = 0;
-	if (hasNumeric){
+	if (hasNumeric(input)){
 		count = count + 1;
 	}
-	if (hasUppercase && !hasUppercaseAsFirstLetter){
+	if (hasUppercase(input) && !hasUppercaseAsFirstLetter(input)){
 		count = count + 1;
 	}
-	if (hasLowercase){
+	if (hasLowercase(input)){
 		count = count + 1;
 	}
-	if(hasSpecial && !hasSpecialAsLastLetter){
+	if(hasSpecial(input) && !hasSpecialAsLastLetter(input)){
 		count = count + 1;
 	}
 	
