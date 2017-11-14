@@ -2,7 +2,7 @@ from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
 from similarityAlgorithm import similar
-from controllers import changePassword, getCompany, addUser, verify, mysession, testfunction, uniqueEmail, getCompanyRequirements
+from controllers import verifyChange, changePassword, getCompany, addUser, verify, mysession, testfunction, uniqueEmail, getCompanyRequirements
 from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
 from models import User
 
@@ -51,10 +51,10 @@ def forgot():
 def decisions():
 	return render_template('decisions.html', title = 'Main')
 
-@app.route('/change')
+@app.route('/change', methods=['GET', 'POST'])
 def change():
 	form = ChangeForm()
-	if request.method == 'POST' and verify(request):
+	if request.method == 'POST' and verifyChange(request):
 		requirements = getCompany(request)
 		if checkPasswordWithCompanySettings(requirements, request.form['password']):
 				changePassword(request)

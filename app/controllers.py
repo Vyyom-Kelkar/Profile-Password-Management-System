@@ -48,8 +48,16 @@ def testfunction(myemail):
 def verify(request):
 	userEmail = request.form['email']
 	userPass = request.form['password']
-	print userEmail
-	print userPass
+	user = mysession.query(User).filter_by(email=userEmail).first()
+	Password = user.current_password
+	if userPass == Password:
+		return True
+	else:
+		return False
+
+def verifyChange(request):
+	userEmail = request.form['email']
+	userPass = request.form['oldPassword']
 	user = mysession.query(User).filter_by(email=userEmail).first()
 	Password = user.current_password
 	if userPass == Password:
