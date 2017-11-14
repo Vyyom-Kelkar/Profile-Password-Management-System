@@ -1,8 +1,8 @@
-from flask import render_template, request, flash, redirect
+from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
 from similarityAlgorithm import similar
-from controllers import testfunction
+from controllers import verify, testfunction 
 
 @app.route('/')
 @app.route('/index')
@@ -12,22 +12,22 @@ def index():
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	form = LoginForm()
-	if request.method == 'POST' and form.validate_on_submit():
-		flash('Login requested for OpenID="%s", remember_me=%s' % (form.openid.data, str(form.remember_me.data)))
-		return redirect('/index')
+	if request.method == 'POST' and verify(request):
+		return redirect('/decisions')
 	return render_template('login.html', title = 'Sign In', form = form)
 
-@app.route('/signup')
+@app.route('/signup', methods = ['GET', 'POST'])
 def signup():
 	form = SignupForm()
+	if request.method == 'POST':
+		session['company'] = request.form['company']
+		return redirect('/newCredentials')
 	return render_template('signup.html', title = 'Sign Up', form = form)
 
 @app.route('/newCredentials', methods=['GET', 'POST'])
 def newCredentials():
 	form = NewForm()
-	#if request.method == 'POST' and form.validate():
-		# validate user doesnt exist
-		# similarity algorithm 
+	print session['company']
 	return render_template('newCredentials.html', title = 'New', form = form)
 
 @app.route('/forgot')

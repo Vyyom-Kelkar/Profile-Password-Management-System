@@ -38,7 +38,7 @@ mysession.add(row)
 def testfunction(myemail):
 	login = datetime(1996, 1, 2, 3, 4, 5)
 	print login
-	myuser = User(ID=9,name='Brett',current_password='doggy',is_admin=1,email=myemail,company_name='Google',phone_number='614-234-5464',password_last_set=login, token='akjv;asv;av;alkv',last_login=login)
+	myuser = User(ID=10,name='Brett',current_password='doggy',is_admin=1,email=myemail,company_name='Google',phone_number='614-234-5464',password_last_set=login, token='akjv;asv;av;alkv',last_login=login)
 	mysession.add(myuser)
 	mysession.commit()
 	data = mysession.query(User).filter_by(ID=9).all()
@@ -46,10 +46,13 @@ def testfunction(myemail):
 	print data[0].email
 
 def verify(request):
-  userEmail = request.format(email)
-  UserPass = request.format(password)
-  pass = mysession.query(User).filter_by(email=userEmail).first()
-  if(pass == UserPass)
-    return True
-  else
-    return False
+	userEmail = request.form['email']
+	userPass = request.form['password']
+	print userEmail
+	print userPass
+	user = mysession.query(User).filter_by(email=userEmail).first()
+	Password = user.current_password
+	if userPass == Password:
+		return True
+	else:
+		return False
