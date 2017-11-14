@@ -3,6 +3,7 @@ from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
 from similarityAlgorithm import similar
 from controllers import verify, testfunction, uniqueEmail, getCompanyRequirements
+from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
 
 @app.route('/')
 @app.route('/index')
@@ -34,6 +35,12 @@ def signup():
 def newCredentials():
 	form = NewForm()
 	requirements = getCompanyRequirements(session['company'])
+	for r in requirements:
+		print r
+	if request.method == 'POST': #and checkPasswordWithCompanySettings(requirements, request.form['password']):
+		print request.form['password']
+		# call controller to add
+		print 'hi'
 	return render_template('newCredentials.html', title = 'New', form = form)
 
 @app.route('/forgot')

@@ -1,7 +1,3 @@
-import datetime, timedelta
-now = datetime.today()
-
-
 def hasCapital(password):
     temp = password.upper()
     if temp == password:
@@ -30,36 +26,27 @@ def hasSpecial(password):
         	return True
     return False
 
-def isExpired(password, daysUntilExpiration, passwordLastSet):
-    datetimeDifference = now - timedelta(days = daysUntilExpiration)
-    if datetimeDifference < passwordLastSet:
-        return False
-    return True 
-
-
 def correctLength(password, passwordLength):
     if passwordLength > len(password):
     	return False
     else:
         return True
 
-def checkPasswordWithCompanySettings(passwordLength, reqCap, reqLower, reqSpecial, reqNumeric, daysUntilExpiration, passwordLastSet, password):
+def checkPasswordWithCompanySettings(settings, password):
    returnValue = True
    #whenever a requirement is not met return false
-   if not(correctLength(password, passwordLength)):
+   if not(correctLength(password, settings[0])):
        return False
-   if not(isExpired(password, daysUntilExpiration, passwordLastSet)):
-       return False
-   if ( reqCap ):
+   if ( settings[1] ):
        if not ( hasCapital(password) ):	
            return False
-   if ( reqLower ):
+   if ( settings[2] ):
        if not ( hasLowercase ):
            return False
-   if ( reqNumeric ):
+   if ( settings[3] ):
        if not ( hasNumeric ):
            return False
-   if ( reqSpecial ):
+   if ( settings[4] ):
        if not ( hasSpecial ):
            return False
    return True	
