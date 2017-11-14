@@ -177,17 +177,14 @@ def lowercaseALetter(newPassword, startAtFront, letters):
     return passwordRet
 
 #Main
-def main():
+def similar(newPassword, oldPasswords):
 
 #set old passwords to input
-    oldPasswords = [] 
-    newPassword = ""
     similarityDifficulty = 4
     numMaxCheck = 0
     generatedPasswords = []
 
     #process input args
-    newPassword = sys.argv[1]
     root = (rootWord(newPassword)) 
         
 
@@ -226,8 +223,3 @@ def main():
     hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(rootWord)
     #print (True, hashedNewPassword, hashedRootWord, NewPassword, hashedRootWord)
     return (True, hashedNewPassword, hashedRootWord)
-
-    return newPassword
-
-if __name__ == '__main__':
-    main()
