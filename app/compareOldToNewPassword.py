@@ -29,7 +29,8 @@ def newPasswordToOldPasswordComparison(newPassword, oldPassword):
     newPasswordLetters = collections.Counter(newPassword)
     oldPasswordLetters = collections.Counter(oldPassword)
     intersection = newPasswordLetters & oldPasswordLetters
-    print intersection
+    root = rootWord(newPassword)
+#    print intersection
     count = 0 
     for item in intersection:
         count = count + intersection[item]
@@ -37,14 +38,14 @@ def newPasswordToOldPasswordComparison(newPassword, oldPassword):
     print percent
     if (percent > .7):
 #        print False
-        return (False, "Too similar", rootWord)
+        return (False, "Too similar", root)
     else:
         if (compareToOldPasswords(oldPasswords, newPassword)):
-            return (False, "Too similar", rootWord)
-        if (compareToOldPasswords(oldPasswords, rootWord)):
-            return (False, "Too similar", rootWord)
+            return (False, "Too similar", root)
+#        if (compareToOldPasswords(oldPasswords, rootWord)):
+#            return (False, "Too similar", rootWord)
         hashedNewPassword = sha256_crypt.using(rounds=1100).hash(newPassword)
-        hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(rootWord)
+        hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(root)
         return (True, hashedNewPassword, hashedRootWord)
 
 #if __name__ == "__main__":
