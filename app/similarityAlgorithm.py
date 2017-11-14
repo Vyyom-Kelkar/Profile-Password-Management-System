@@ -217,8 +217,8 @@ def similar(newPassword, oldPasswords):
     print generatedPasswords
     for password in generatedPasswords:
         if (compareToOldPasswords(oldPasswords, password)):
-            return (False, "Too similar", root)
+            return [False, "Too similar", root]
     hashedNewPassword = sha256_crypt.using(rounds=1100).hash(newPassword)
     hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(root)
     #print (True, hashedNewPassword, hashedRootWord, NewPassword, hashedRootWord)
-    return (True, hashedNewPassword, hashedRootWord)
+    return [True, hashedNewPassword, hashedRootWord]

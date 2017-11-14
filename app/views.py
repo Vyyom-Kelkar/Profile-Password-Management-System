@@ -57,7 +57,8 @@ def change():
 	if request.method == 'POST' and verifyChange(request):
 		requirements = getCompany(request)
 		if checkPasswordWithCompanySettings(requirements, request.form['password']):
-				changePassword(request)
+				if checkWithPasswords(request)
+					changePassword(request)
 				return redirect('/decisions')
 	return render_template('change.html', title = 'Change', form = form)
 
