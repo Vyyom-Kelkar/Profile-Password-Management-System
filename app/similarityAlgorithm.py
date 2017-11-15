@@ -37,7 +37,7 @@ def decrementNumber(newPassword, startAtFront):
 #old passwords are hashed new password is not
 def compareToOldPasswords(oldPasswords, newPassword):
     for password in oldPasswords:
-        if ( sha256_crypt.verify(newPassword, password) ):
+        if ( sha256_crypt.verify(newPassword, str(password)) ):
             return True
     return False
 
@@ -216,7 +216,7 @@ def similar(newPassword, oldPasswords):
         print "wow"
     print generatedPasswords
     for password in generatedPasswords:
-        if (compareToOldPasswords(oldPasswords, password)):
+        if (compareToOldPasswords(oldPasswords, str(password))):
             return [False, "Too similar", root]
     hashedNewPassword = sha256_crypt.using(rounds=1100).hash(newPassword)
     hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(root)

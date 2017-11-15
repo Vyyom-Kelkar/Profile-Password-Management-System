@@ -3,7 +3,9 @@ from flask import request
 from models import mysession, User, Admin_Setting, Old_Password, Common_Password, engine
 from sqlalchemy import update
 from datetime import datetime
-
+from similarityAlgorithm import similar
+from compareOldToNewPassword import newPasswordToOldPasswordComparison 
+from hashPassword import hashPassword
 
 '''
 1) GET : list_object = mysession.query(TABLE_NAME).filter_by(expressions with commas).all()
@@ -34,16 +36,6 @@ row = Common_Password(ID=112, hashed_password="yydhdhdhd")
 mysession.add(row)
 
 '''
-
-def testfunction(myemail):
-	login = datetime(1996, 1, 2, 3, 4, 5)
-	print login
-	myuser = User(ID=10,name='Brett',current_password='doggy',is_admin=1,email=myemail,company_name='Google',phone_number='614-234-5464',password_last_set=login, token='akjv;asv;av;alkv',last_login=login)
-	mysession.add(myuser)
-	mysession.commit()
-	data = mysession.query(User).filter_by(ID=9).all()
-	print data[0].ID
-	print data[0].email
 
 def verify(request):
 	userEmail = request.form['email']
@@ -104,21 +96,29 @@ def getCompany(request):
 	userCompany = user.company_name
 	return getCompanyRequirements(userCompany)
 
-def checkWithOldPasswordsAndUpdate(request):
-	userEmail = request.form['email']
-	userOldPass = request.form['oldPassword']
-	user = mysession.query(User).filter_by(email=userEmail).first()
-	
-	objectOldPasswords = mysession.query(Old_Password).filter_by(email=userEmail).all()
-	
-	userOldPasswords = []
-	for i in range(len(objectOldPasswords)):
-	  userOldPasswords[i]=userOldPasswords[i].hashed_password
-	
-	responseArray = JacobFunction(userOldPass, userOldPasswords)
-	
-	if(responseArray[0]):
-	   newHashedPassword = responseArray[1]
-	   mysession.query(User).filter_by(email=userEmail).update({"current_password": newHashedPassword})
+def companyExists(request):
+	userCompany = request.form['company']
+	company = mysession.query(Admin_Setting).filter_by(company_name=userCompany).all()
+	if(len(company)>0):
+		return True
 	else:
-	  return False 
+		return False
+
+def checkWithOldPasswordsAndUpdate(email):
+#userEmail = request.form['email']
+#password = request.form['password']
+	password = 'sportsball1'	
+	oldPassword = 'sportsball'
+	objectOldPasswords = mysession.query(Old_Password).filter_by(userEmail = email).all()
+	oldPasswords = []
+	for i in objectOldPasswords:
+		oldPassword = hashPassword(i.hashed_password)	
+		oldPasswords.append(oldPassword)
+
+	responseArray = newPasswordToOldPasswordComparison(password, oldPassword, oldPasswords)
+	print responseArray	
+#if(responseArray[0]):
+#	   newHashedPassword = responseArray[1]
+#	   mysession.query(User).filter_by(email=userEmail).update({"current_password": newHashedPassword})
+#	else:
+#	  return False 

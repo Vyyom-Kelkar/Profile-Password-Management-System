@@ -21,7 +21,7 @@ def rootWord(newPassword):
 
 
 #def main():
-def newPasswordToOldPasswordComparison(newPassword, oldPassword):
+def newPasswordToOldPasswordComparison(newPassword, oldPassword, oldPasswords):
 #    oldPassword = sys.argv[1]
 #    newPassword = sys.argv[2]
     newPassword = newPassword.lower()
@@ -38,15 +38,16 @@ def newPasswordToOldPasswordComparison(newPassword, oldPassword):
     print percent
     if (percent > .7):
 #        print False
-        return (False, "Too similar", root)
+        return [False, "Too similar", root]
     else:
+        newPassword = str(newPassword)
         if (compareToOldPasswords(oldPasswords, newPassword)):
-            return (False, "Too similar", root)
+            return [False, "Too similar", root]
 #        if (compareToOldPasswords(oldPasswords, rootWord)):
 #            return (False, "Too similar", rootWord)
         hashedNewPassword = sha256_crypt.using(rounds=1100).hash(newPassword)
         hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(root)
-        return (True, hashedNewPassword, hashedRootWord)
+        return [True, hashedNewPassword, hashedRootWord]
 
 #if __name__ == "__main__":
 #    main()

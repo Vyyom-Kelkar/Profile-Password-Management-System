@@ -1,12 +1,5 @@
 
 
-def companyExists(request):
-	userCompany = request.form[company]
-	company = mysession.query(Admin_Setting).filter_by(company_name=userCompany)
-	if(len(company)>0)
-		return True
-	else
-		return False
 
 
 def addCompany(request):

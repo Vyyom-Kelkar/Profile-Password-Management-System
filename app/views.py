@@ -1,14 +1,14 @@
 from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
-from similarityAlgorithm import similar
-from controllers import verifyChange, changePassword, getCompany, addUser, verify, mysession, testfunction, uniqueEmail, getCompanyRequirements
+from controllers import addAdminSettings, companyExists, checkWithOldPasswordsAndUpdate, verifyChange, changePassword, getCompany, addUser, verify, mysession, uniqueEmail, getCompanyRequirements
 from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
 from models import User
 
 @app.route('/')
 @app.route('/index')
 def index():
+	checkWithOldPasswordsAndUpdate('thisisemail@email.com')
 	return render_template('index.html', title = 'Home')
 
 @app.route('/login', methods = ['GET', 'POST'])
@@ -27,8 +27,8 @@ def signup():
 		session['company'] = request.form['company']
 		session['phone'] = request.form['phone']
 		session['userType'] = request.form['userType']
-		if request.form['userType'] == 'admin': #&& companyDoesNotExist(request.form['company']):
-			return redirect('/admin')		
+		if request.form['userType'] == 'admin' and not companyExists(request):
+			return redirect('/newAdmin')		
 		return redirect('/newCredentials')
 	return render_template('signup.html', title = 'Sign Up', form = form)
 
@@ -56,10 +56,8 @@ def change():
 	form = ChangeForm()
 	if request.method == 'POST' and verifyChange(request):
 		requirements = getCompany(request)
-		if checkPasswordWithCompanySettings(requirements, request.form['password']):
-				if checkWithPasswords(request):
-					changePassword(request)
-				return redirect('/decisions')
+		if checkPasswordWithCompanySettings(requirements, request.form['password']): #and checkWithPasswordsAndUpdate(request):
+					return redirect('/decisions')
 	return render_template('change.html', title = 'Change', form = form)
 
 @app.route('/confirm')
@@ -72,15 +70,12 @@ def admin():
 	form = AdminForm()
 	return render_template('admin.html', title = 'Admin', form = form)
 
-#@app.route('/newAdmin')
-#def newAdmin():
-#	form = AdminForm()
-#	if request.method == 'POST'
-		# get company requirements from user
-		# send array to controller 
-		# set all session variables
-		# forward to newCredentials 
-#	return render_template('newAdmin.html', title = 'newAdmin', form = form)
+@app.route('/newAdmin')
+def newAdmin():
+	form = AdminForm()
+	if request.method == 'POST':
+		addAdminSettings(request, session['company'])
+	return render_template('newAdmin.html', title = 'newAdmin', form = form)
 
 @app.route('/forgotChange')
 def forgotChange():
