@@ -146,3 +146,17 @@ def verifyAdmin(request)
 			return True
 	else:
  		return False
+
+def updateAdminSettings(form, companyName)
+	passLength = form.plength.data
+	requireCaps = form.caps.data
+	requireLow = form.lowercase.data
+	requireNum = form.numeric.data
+	requireSpec = form.special.data
+	expDays = form.expiration.data
+  
+	mysession.query(Admin_Setting).filter_by(company_name=companyName).update({"password_length": passLength})
+	mysession.query(Admin_Setting).filter_by(company_name=companyName).update({"require_caps": requireCaps})
+	mysession.query(Admin_Setting).filter_by(company_name=companyName).update({"require_lowercase": requireLow})
+	mysession.query(Admin_Setting).filter_by(company_name=companyName).update({"require_number": requireNum})
+	mysession.query(Admin_Setting).filter_by(company_name=companyName).update({"require_special": requireSpec})
