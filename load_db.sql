@@ -8,10 +8,10 @@ INSERT INTO User values
 ('A','catty',1,'thisisnotemail@email.com','Bad Company','666-666-6669','1403-03-11 02:01:04.99383','akjv;asv;av;fadsfsdfv','1996-02-13 10:08:08.174');
 
 INSERT INTO Old_Password values
-(thisisemail@email.com, 'sportsball'),
-(thisisemail@email.com, 'computers'),
-(thisemail@email.com, 'ihatemen'),
-(thisisnotemail@email.com, 'hailsatan');
+('thisisemail@email.com', 'sportsball'),
+('thisisemail@email.com', 'computers'),
+('thisemail@email.com', 'ihatemen'),
+('thisisnotemail@email.com', 'hailsatan');
 
 INSERT INTO Common_Password values
 ('password'),
