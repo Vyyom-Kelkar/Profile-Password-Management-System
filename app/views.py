@@ -3,12 +3,11 @@ from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
 from controllers import addAdminSettings, addAdminSettings, companyExists, checkWithOldPasswordsAndUpdate, verifyChange, changePassword, getCompany, addUser, verify, mysession, uniqueEmail, getCompanyRequirements
 from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
-from models import User
+from models import User, Admin_Setting
 
 @app.route('/')
 @app.route('/index')
 def index():
-	checkWithOldPasswordsAndUpdate('thisisemail@email.com')
 	return render_template('index.html', title = 'Home')
 
 @app.route('/login', methods = ['GET', 'POST'])
@@ -38,7 +37,7 @@ def newCredentials():
 	requirements = getCompanyRequirements(session['company'])
 	user = [session['name'], session['email'], session['company'], session['phone'], session['userType']]
 	if request.method == 'POST' and checkPasswordWithCompanySettings(requirements, request.form['password']):
-		#addUser(user, request.form['password'])
+		addUser(user, request.form['password'])
 		return redirect('/decisions')
 	return render_template('newCredentials.html', title = 'New', form = form)
 
@@ -75,8 +74,7 @@ def newAdmin():
 	form = AdminForm()
 	if request.method == 'POST':
 		addAdminSettings(form, session['company'])
-		print mysession.query(Admin_Settings).filter_by(company_name = session['company']).first().password_length
-		return redirect('/')
+		return redirect('/newCredentials')
 	return render_template('newAdmin.html', title = 'newAdmin', form = form)
 
 @app.route('/forgotChange')
