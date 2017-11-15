@@ -134,3 +134,15 @@ def addAdminSettings(form, companyName):
 	mySettings = Admin_Setting(company_name=companyName, password_length=passLength, require_caps=requireCaps, require_lowercase=requireLow, require_number=requireNum, require_special=requireSpec, expiration_days=expDays)
 	mysession.add(mySettings)
 	mysession.commit()
+
+def verifyAdmin(request)
+	userEmail = request.form['email']
+	userPass = request.form['password']
+	user = mysession(User).filter_by(email=userEmail).first()
+	password = user.current_password
+	if userPass == Password:
+		admin = user.is_admin
+ 		if(admin)
+			return True
+	else:
+ 		return False
