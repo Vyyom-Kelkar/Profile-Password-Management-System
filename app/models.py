@@ -23,7 +23,7 @@ class User(Base):
 	
 	email = db.Column(db.String(50), primary_key=True)
 	name = db.Column(db.String(50), nullable=False)
-	current_password = db.Column(db.String(50), nullable=False)
+	current_password = db.Column(db.String(256), nullable=False)
 	is_admin = db.Column(db.Boolean, nullable=False)
 	company_name = db.Column(db.String(50), db.ForeignKey('Admin_Setting.company_name'), nullable=False)
 	phone_number = db.Column(db.String(12), nullable=False)
@@ -36,7 +36,7 @@ class Old_Password(Base):
 	__tablename__ = 'Old_Password'
 
 	userEmail = db.Column(db.Integer, db.ForeignKey('User.email'), primary_key=True)
-	hashed_password = db.Column(db.String(50), nullable=False, primary_key=True)
+	hashed_password = db.Column(db.String(256), nullable=False, primary_key=True)
 	User = db.relationship(User)
 
 class Common_Password(Base):

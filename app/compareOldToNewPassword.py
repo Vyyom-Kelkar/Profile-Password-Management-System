@@ -4,8 +4,10 @@ from passlib.hash import sha256_crypt
 
 #old passwords are hashed new password is not
 def compareToOldPasswords(oldPasswords, newPassword):
+    print oldPasswords
+    print newPassword
     for password in oldPasswords:
-        if ( sha256_crypt.verify(newPassword, password) ):
+        if ( sha256_crypt.verify(newPassword, str(password)) ):
             return True
     return False
 

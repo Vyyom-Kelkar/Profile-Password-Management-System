@@ -6,6 +6,7 @@ from datetime import datetime
 from similarityAlgorithm import similar
 from compareOldToNewPassword import newPasswordToOldPasswordComparison 
 from hashPassword import hashPassword
+from verify import verifyPassword
 
 '''
 1) GET : list_object = mysession.query(TABLE_NAME).filter_by(expressions with commas).all()
@@ -42,7 +43,7 @@ def verify(request):
 	userPass = request.form['password']
 	user = mysession.query(User).filter_by(email=userEmail).first()
 	Password = user.current_password
-	if userPass == Password:
+	if verifyPassword(Password, userPass):
 		return True
 	else:
 		return False
@@ -52,7 +53,7 @@ def verifyChange(request):
 	userPass = request.form['oldPassword']
 	user = mysession.query(User).filter_by(email=userEmail).first()
 	Password = user.current_password
-	if userPass == Password:
+	if verifyPassword(Password, userPass):
 		return True
 	else:
 		return False
@@ -80,6 +81,7 @@ def addUser(user, password):
 	userPhone = user[3]
 	userLastSet = today
 	userLastLogin = today
+	userCurrPass = hashPassword(userCurrPass)
 
   	myUser = User(name=userName, current_password=userCurrPass, is_admin=adminStatus, email=userEmail, company_name=userCompany, phone_number=userPhone, password_last_set=userLastSet, token=None, last_login=userLastLogin)
   	mysession.add(myUser)
@@ -88,6 +90,7 @@ def addUser(user, password):
 def changePassword(request):
 	userEmail = request.form['email']
 	newPassword = request.form['password']
+	newPassword = hashPassword(newPassword)
 	mysession.query(User).filter_by(email=userEmail).update({"current_password": newPassword})
 
 def getCompany(request):
@@ -109,6 +112,27 @@ def companyExists(request):
 		return True
 	else:
 		return False
+
+def checkWithOldPasswordsAndUpdateChange(request):
+	email = request.form['email']
+	password = request.form['password']
+	oldPassword = request.form['oldPassword']
+	oldPasswords = mysession.query(Old_Password).filter_by(userEmail = email).all()
+	oldPasswordsArr = []
+	for i in oldPasswords:
+		oldPasswordsArr.append(i.hashed_password)
+
+	responseArray = newPasswordToOldPasswordComparison(password, oldPassword, oldPasswordsArr)
+	if(responseArray[0]):
+		newHashedPassword = responseArray[1]
+		mysession.query(User).filter_by(email = email).update({"current_password": newHashedPassword})
+		oldPassword = hashPassword(oldPassword)
+		newRow = Old_Password(userEmail = email, hashed_password = oldPassword)
+		mysession.add(newRow)
+		mysession.commit()
+		return True
+	else:
+	  return False 
 
 def checkWithOldPasswordsAndUpdate(email):
 #userEmail = request.form['email']
@@ -145,13 +169,13 @@ def verifyAdmin(request):
 	userEmail = request.form['email']
 	userPass = request.form['password']
 	user = mysession.query(User).filter_by(email=userEmail).first()
-	password = user.current_password
-	if userPass == password:
+	Password = user.current_password
+	if verifyPassword(Password, userPass):
 		return user.is_admin
 	else:
  		return False
 
-def updateAdminSettings(form, companyName)
+def updateAdminSettings(form, companyName):
 	passLength = form.plength.data
 	requireCaps = form.caps.data
 	requireLow = form.lowercase.data

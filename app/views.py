@@ -1,7 +1,7 @@
 from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
-from controllers import verifyAdmin, company, addAdminSettings, addAdminSettings, companyExists, checkWithOldPasswordsAndUpdate, verifyChange, changePassword, getCompany, addUser, verify, mysession, uniqueEmail, getCompanyRequirements
+from controllers import updateAdminSettings, verifyAdmin, company, checkWithOldPasswordsAndUpdateChange, addAdminSettings, addAdminSettings, companyExists, checkWithOldPasswordsAndUpdate, verifyChange, changePassword, getCompany, addUser, verify, mysession, uniqueEmail, getCompanyRequirements
 from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
 from models import User, Admin_Setting
 
@@ -55,7 +55,7 @@ def change():
 	form = ChangeForm()
 	if request.method == 'POST' and verifyChange(request):
 		requirements = getCompany(request)
-		if checkPasswordWithCompanySettings(requirements, request.form['password']): #and checkWithPasswordsAndUpdate(request):
+		if checkPasswordWithCompanySettings(requirements, request.form['password']) and checkWithOldPasswordsAndUpdateChange(request):
 			return redirect('/decisions')
 	return render_template('change.html', title = 'Change', form = form)
 
@@ -90,6 +90,4 @@ def forgotChange():
 
 @app.route('/forgotConfirmation', methods = ['POST'])
 def forgotConfirmation():
-	email = request.form['email']
-	testfunction(email)
 	return render_template('forgotConfirmation.html', title = 'Forgot Confirmation')
