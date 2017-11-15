@@ -1,6 +1,6 @@
 import collections
 from passlib.hash import sha256_crypt
-import sys
+# import sys
 
 #old passwords are hashed new password is not
 def compareToOldPasswords(oldPasswords, newPassword):
@@ -43,8 +43,8 @@ def newPasswordToOldPasswordComparison(newPassword, oldPassword, oldPasswords):
         newPassword = str(newPassword)
         if (compareToOldPasswords(oldPasswords, newPassword)):
             return [False, "Too similar", root]
-#        if (compareToOldPasswords(oldPasswords, rootWord)):
-#            return (False, "Too similar", rootWord)
+        if (compareToOldPasswords(oldPasswords, root)):
+            return [False, "Too similar", root]
         hashedNewPassword = sha256_crypt.using(rounds=1100).hash(newPassword)
         hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(root)
         return [True, hashedNewPassword, hashedRootWord]
