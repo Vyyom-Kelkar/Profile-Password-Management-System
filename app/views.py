@@ -78,7 +78,8 @@ def admin():
 #	if request.method == 'POST'
 		# get company requirements from user
 		# send array to controller 
-		# forward to decisions
+		# set all session variables
+		# forward to newCredentials 
 #	return render_template('newAdmin.html', title = 'newAdmin', form = form)
 
 @app.route('/forgotChange')

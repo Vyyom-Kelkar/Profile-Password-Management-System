@@ -9,4 +9,4 @@ INSERT INTO Old_Password values
 ('thisisnotemail2@email.com', 'hailsatan');
 
 INSERT INTO Common_Password values
-('passwordddddd'),
+('passwordddddd');

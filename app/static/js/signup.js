@@ -1,24 +1,32 @@
 function hasLowercase(str){
-	var lowercase = /[a-z]/
+	var lowercase = /[a-z]/;
 	return lowercase.test(str);
 }
 
 function hasUppercase(str){
-	var uppercase = /[A-Z]/
+	var uppercase = /[A-Z]/;
 	return uppercase.test(str);
 }
 
 function hasUppercaseAsFirstLetter(str){
 	var firstLetter = str.substring(0,1);
 	var restOfStr = str.substring(1);
-	if (hasUppercase(lastLetter) && !hasUppercase(restOfStr)){
-		return True
+	if (hasUppercase(firstLetter) && !hasUppercase(restOfStr)){
+		return true;
 	}
-	return False;
+	return false;
 }
 
+/*function hasUppercaseAsFirstLetter(str){
+	var firstLetter = str.substring(0,1);
+	if (hasUppercase(firstLetter)){
+		return true;
+	}
+	return false;
+}
+*/
 function hasSpecial(str){
-	var special = /[!@#$%?'&*]/
+	var special = /[!@#$%?'&*]/;
 	return special.test(str);
 }
 
@@ -26,11 +34,19 @@ function hasSpecialAsLastLetter(str){
 	var lastLetter = str.substring(str.length-1);
 	var restOfStr = str.substring(0,str.lenghth-1);
 	if (hasSpecial(lastLetter) && !hasSpecial(restOfStr)){
-		return True
+		return true;
 	}
-	return False;
+	return false;
 }
-
+/*
+function hasSpecialAsLastLetter(str){
+	var lastLetter = str.substring(str.length-1);
+	if (hasSpecial(lastLetter)){
+		return true;
+	}
+	return false;
+}
+*/
 function hasNumeric(str){
 	var numeric = /[0-9]/
 	return numeric.test(str);
@@ -46,6 +62,17 @@ function updateStrength(event){
 	if (hasUppercase(input) && !hasUppercaseAsFirstLetter(input)){
 		count = count + 1;
 	}
+
+/*	if (hasUppercaseAsFirstLetter(input)){
+		var restOfInput = input.substring(1);
+		if(hasUppercase(restOfInput)){
+
+			count = count + 1;
+		}
+	}else if (hasUppercase(input)){
+		count = count + 1;
+	}
+*/
 	if (hasLowercase(input)){
 		count = count + 1;
 	}
@@ -53,6 +80,16 @@ function updateStrength(event){
 		count = count + 1;
 	}
 	
+/*	if(hasSpecialAsLastLetter(input)){
+		var charBeforeLast = input.sustring(input.length-2, input.length-1);
+		if(hasSpecial(charBeforeLast)){
+
+			count = count + 1;
+		}
+	}else if (hasSpecial(input)){
+		count = count + 1;
+	}
+*/
 	if(input.length == 0){
 		$(".progress-bar").removeClass("great");
 		$(".progress-bar").removeClass("good");
