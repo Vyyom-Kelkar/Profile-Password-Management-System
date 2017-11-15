@@ -62,6 +62,8 @@ def change():
 @app.route('/confirm')
 def confirm():
 	form = LoginForm()
+	if request.method == 'POST' and verifyAdmin(request):
+		return redirect ('/admin')
 	return render_template('confirm.html', title = 'Admin', form = form)
 
 @app.route('/admin')
