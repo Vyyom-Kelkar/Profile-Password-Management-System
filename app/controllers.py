@@ -122,3 +122,15 @@ def checkWithOldPasswordsAndUpdate(email):
 #	   mysession.query(User).filter_by(email=userEmail).update({"current_password": newHashedPassword})
 #	else:
 #	  return False 
+
+def addAdminSettings(request, companyName):
+	passLength = request.form['plength']
+	requireCaps = request.form['caps']
+	requireLow = request.form['lowercase']
+	requireNum = request.form['numeric']
+	requireSpec = request.form['special']
+	expDays = request.form['expiration']
+  	
+ 	mySettings = Admin_Settings(company_name=companyName, password_length=passLength, require_caps=requireCaps, require_lowercase=requireLow, require_number=requireNum, require_special=requireSpec, expiration_days=expDays)
+  mysession.add(mySettings)
+	mysession.commit()

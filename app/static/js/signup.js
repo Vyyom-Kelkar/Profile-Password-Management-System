@@ -32,7 +32,7 @@ function hasSpecial(str){
 
 function hasSpecialAsLastLetter(str){
 	var lastLetter = str.substring(str.length-1);
-	var restOfStr = str.substring(0,str.lenghth-1);
+	var restOfStr = str.substring(0,str.length-1);
 	if (hasSpecial(lastLetter) && !hasSpecial(restOfStr)){
 		return true;
 	}
@@ -48,7 +48,7 @@ function hasSpecialAsLastLetter(str){
 }
 */
 function hasNumeric(str){
-	var numeric = /[0-9]/
+	var numeric = /[0-9]/;
 	return numeric.test(str);
 }
 
