@@ -96,6 +96,12 @@ def getCompany(request):
 	userCompany = user.company_name
 	return getCompanyRequirements(userCompany)
 
+def company(request):
+	userEmail = request.form['email']
+	user = mysession.query(User).filter_by(email=userEmail).first()
+	userCompany = user.company_name
+	return userCompany
+
 def companyExists(request):
 	userCompany = request.form['company']
 	company = mysession.query(Admin_Setting).filter_by(company_name=userCompany).all()
@@ -135,14 +141,12 @@ def addAdminSettings(form, companyName):
 	mysession.add(mySettings)
 	mysession.commit()
 
-def verifyAdmin(request)
+def verifyAdmin(request):
 	userEmail = request.form['email']
 	userPass = request.form['password']
-	user = mysession(User).filter_by(email=userEmail).first()
+	user = mysession.query(User).filter_by(email=userEmail).first()
 	password = user.current_password
-	if userPass == Password:
-		admin = user.is_admin
- 		if(admin)
-			return True
+	if userPass == password:
+		return user.is_admin
 	else:
  		return False

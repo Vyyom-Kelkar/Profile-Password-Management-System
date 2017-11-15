@@ -1,7 +1,7 @@
 from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
-from controllers import addAdminSettings, addAdminSettings, companyExists, checkWithOldPasswordsAndUpdate, verifyChange, changePassword, getCompany, addUser, verify, mysession, uniqueEmail, getCompanyRequirements
+from controllers import verifyAdmin, company, addAdminSettings, addAdminSettings, companyExists, checkWithOldPasswordsAndUpdate, verifyChange, changePassword, getCompany, addUser, verify, mysession, uniqueEmail, getCompanyRequirements
 from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
 from models import User, Admin_Setting
 
@@ -59,16 +59,20 @@ def change():
 			return redirect('/decisions')
 	return render_template('change.html', title = 'Change', form = form)
 
-@app.route('/confirm')
+@app.route('/confirm', methods = ['POST', 'GET'])
 def confirm():
 	form = LoginForm()
 	if request.method == 'POST' and verifyAdmin(request):
+		session['company'] = company(request)
 		return redirect ('/admin')
 	return render_template('confirm.html', title = 'Admin', form = form)
 
-@app.route('/admin')
+@app.route('/admin', methods = ['POST', 'GET'])
 def admin():
 	form = AdminForm()
+	if request.method == 'POST':
+		updateAdminSettings(form, session['company'])
+		return redirect('/decisions')
 	return render_template('admin.html', title = 'Admin', form = form)
 
 @app.route('/newAdmin', methods = ['GET', 'POST'])
