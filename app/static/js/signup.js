@@ -1,38 +1,38 @@
 function hasLowercase(str){
-	var lowercase = /[a-z]/
+	var lowercase = /[a-z]/;
 	return lowercase.test(str);
 }
 
 function hasUppercase(str){
-	var uppercase = /[A-Z]/
+	var uppercase = /[A-Z]/;
 	return uppercase.test(str);
 }
 
 function hasUppercaseAsFirstLetter(str){
 	var firstLetter = str.substring(0,1);
 	var restOfStr = str.substring(1);
-	if (hasUppercase(lastLetter) && !hasUppercase(restOfStr)){
-		return True
+	if (hasUppercase(firstLetter) && !hasUppercase(restOfStr)){
+		return true;
 	}
-	return False;
+	return false;
 }
 
 function hasSpecial(str){
-	var special = /[!@#$%?'&*]/
+	var special = /[!@#$%?'&*]/;
 	return special.test(str);
 }
 
 function hasSpecialAsLastLetter(str){
 	var lastLetter = str.substring(str.length-1);
-	var restOfStr = str.substring(0,str.lenghth-1);
+	var restOfStr = str.substring(0,str.length-1);
 	if (hasSpecial(lastLetter) && !hasSpecial(restOfStr)){
-		return True
+		return true;
 	}
-	return False;
+	return false;
 }
 
 function hasNumeric(str){
-	var numeric = /[0-9]/
+	var numeric = /[0-9]/;
 	return numeric.test(str);
 }
 
