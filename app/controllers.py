@@ -130,22 +130,7 @@ def addAdminSettings(request, companyName):
 	requireNum = request.form['numeric']
 	requireSpec = request.form['special']
 	expDays = request.form['expiration']
-  	if requireCaps == y
-		requireCaps = 1
-	else
-		requireCaps = 0
-	if requireLow == y
-		requireLow = 1
-	else
-		requireLow = 0
-	if requireNum == y
-		requireNum = 1
-	else
-		requireNum = 0
-	if requireSpec == y
-		requireSpec = 1
-	else
-		requireSpec = 0
+
 		
 	mySettings = Admin_Settings(company_name=companyName, password_length=passLength, require_caps=requireCaps, require_lowercase=requireLow, require_number=requireNum, require_special=requireSpec, expiration_days=expDays)
 	mysession.add(mySettings)
