@@ -124,12 +124,13 @@ def checkWithOldPasswordsAndUpdate(email):
 #	  return False 
 
 def addAdminSettings(request, companyName):
-	passLength = request.form['plength']
-	requireCaps = request.form['caps']
-	requireLow = request.form['lowercase']
-	requireNum = request.form['numeric']
-	requireSpec = request.form['special']
-	expDays = request.form['expiration']
+	passLength = form.plength.data
+	requireCaps = form.caps.data
+	requireLow = form.lowercase.data
+	requireNum = form.numeric.data
+	requireSpec = form.special.data
+	expDays = form.expiration.data
+		
 	mySettings = Admin_Settings(company_name=companyName, password_length=passLength, require_caps=requireCaps, require_lowercase=requireLow, require_number=requireNum, require_special=requireSpec, expiration_days=expDays)
 	mysession.add(mySettings)
 	mysession.commit()
