@@ -103,3 +103,22 @@ def getCompany(request):
 	user = mysession.query(User).filter_by(email=userEmail).first()
 	userCompany = user.company_name
 	return getCompanyRequirements(userCompany)
+
+def checkWithOldPasswordsAndUpdate(request):
+	userEmail = request.form['email']
+	userOldPass = request.form['oldPassword']
+	user = mysession.query(User).filter_by(email=userEmail).first()
+	
+	objectOldPasswords = mysession.query(Old_Password).filter_by(email=userEmail).all()
+	
+	userOldPasswords = []
+	for i in range(len(objectOldPasswords)):
+	  userOldPasswords[i]=userOldPasswords[i].hashed_password
+	
+	responseArray = JacobFunction(userOldPass, userOldPasswords)
+	
+	if(responseArray[0]):
+	   newHashedPassword = responseArray[1]
+	   mysession.query(User).filter_by(email=userEmail).update({"current_password": newHashedPassword})
+	else:
+	  return False 
