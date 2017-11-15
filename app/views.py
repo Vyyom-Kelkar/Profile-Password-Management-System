@@ -27,7 +27,7 @@ def signup():
 		session['company'] = request.form['company']
 		session['phone'] = request.form['phone']
 		session['userType'] = request.form['userType']
-		if request.form['userType'] == 'admin':
+		if request.form['userType'] == 'admin': #&& companyDoesNotExist(request.form['company']):
 			return redirect('/admin')		
 		return redirect('/newCredentials')
 	return render_template('signup.html', title = 'Sign Up', form = form)
@@ -71,6 +71,15 @@ def confirm():
 def admin():
 	form = AdminForm()
 	return render_template('admin.html', title = 'Admin', form = form)
+
+#@app.route('/newAdmin')
+#def newAdmin():
+#	form = AdminForm()
+#	if request.method == 'POST'
+		# get company requirements from user
+		# send array to controller 
+		# forward to decisions
+#	return render_template('newAdmin.html', title = 'newAdmin', form = form)
 
 @app.route('/forgotChange')
 def forgotChange():
