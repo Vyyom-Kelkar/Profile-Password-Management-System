@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 <div class = "container">
-	<form action = "/decisions" name = "admin">
+	<form action = "/newAdmin" method = 'POST'  name = "newAdmin">
 		<div class="form-group row justify-content-center">
 			<div class = "col-sm-8 text-center">
 				<h1>Company Password Requirements</h1>
@@ -24,19 +24,19 @@
 		</div>
 		<div class="form-group row justify-content-center">
 			<div class = "col-sm-5">
-				{{ form.numeric }}
+				{{ form.special }}
 				{{ form.special.label }}
 			</div>
 		</div>
 		<div class="form-group row justify-content-center">
 			<div class = "col-sm-5">
-				{{ form.numeric }}
+				{{ form.caps }}
 				{{ form.caps.label }}
 			</div>
 		</div>
 		<div class="form-group row justify-content-center">
 			<div class = "col-sm-5">
-				{{ form.numeric }}
+				{{ form.lowercase }}
 				{{ form.lowercase.label }}
 			</div>
 		</div>

@@ -1,7 +1,7 @@
 from flask import url_for, render_template, session, request, flash, redirect
 from app import app
 from .forms import AdminForm, LoginForm, SignupForm, NewForm, ForgotForm, ChangeForm, ForgotChangeForm
-from controllers import addAdminSettings, companyExists, checkWithOldPasswordsAndUpdate, verifyChange, changePassword, getCompany, addUser, verify, mysession, uniqueEmail, getCompanyRequirements
+from controllers import addAdminSettings, addAdminSettings, companyExists, checkWithOldPasswordsAndUpdate, verifyChange, changePassword, getCompany, addUser, verify, mysession, uniqueEmail, getCompanyRequirements
 from checkPasswordWithCompanySettings import checkPasswordWithCompanySettings 
 from models import User
 
@@ -57,7 +57,7 @@ def change():
 	if request.method == 'POST' and verifyChange(request):
 		requirements = getCompany(request)
 		if checkPasswordWithCompanySettings(requirements, request.form['password']): #and checkWithPasswordsAndUpdate(request):
-					return redirect('/decisions')
+			return redirect('/decisions')
 	return render_template('change.html', title = 'Change', form = form)
 
 @app.route('/confirm')
@@ -70,11 +70,13 @@ def admin():
 	form = AdminForm()
 	return render_template('admin.html', title = 'Admin', form = form)
 
-@app.route('/newAdmin')
+@app.route('/newAdmin', methods = ['GET', 'POST'])
 def newAdmin():
 	form = AdminForm()
 	if request.method == 'POST':
-		addAdminSettings(request, session['company'])
+		addAdminSettings(form, session['company'])
+		print mysession.query(Admin_Settings).filter_by(company_name = session['company']).first().password_length
+		return redirect('/')
 	return render_template('newAdmin.html', title = 'newAdmin', form = form)
 
 @app.route('/forgotChange')
