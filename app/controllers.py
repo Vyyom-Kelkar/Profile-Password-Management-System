@@ -134,18 +134,15 @@ def checkWithOldPasswordsAndUpdateChange(request):
 	else:
 	  return False 
 
-def checkWithOldPasswordsAndUpdate(email):
-#userEmail = request.form['email']
-#password = request.form['password']
-	password = 'sportsball1'	
-	oldPassword = 'sportsball'
-	objectOldPasswords = mysession.query(Old_Password).filter_by(userEmail = email).all()
-	oldPasswords = []
+def checkWithOldPasswordsAndUpdate(request):
+	userEmail = request.form['email']
+	password = request.form['password']
+	objectOldPasswords = mysession.query(Old_Password).filter_by(userEmail = userEmail).all()
+	oldPasswordsArr = []
 	for i in objectOldPasswords:
-		oldPassword = hashPassword(i.hashed_password)	
-		oldPasswords.append(oldPassword)
+		oldPasswordsArr.append(i.hashed_password)
 
-	responseArray = newPasswordToOldPasswordComparison(password, oldPassword, oldPasswords)
+	responseArray = similar(password, oldPasswordsArr)
 	print responseArray	
 #if(responseArray[0]):
 #	   newHashedPassword = responseArray[1]

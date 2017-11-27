@@ -219,6 +219,6 @@ def similar(newPassword, oldPasswords):
         if (compareToOldPasswords(oldPasswords, str(password))):
             return [False, "Too similar", root]
     hashedNewPassword = sha256_crypt.using(rounds=1100).hash(newPassword)
-    hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(root)
+#hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(root)
     #print (True, hashedNewPassword, hashedRootWord, NewPassword, hashedRootWord)
-    return [True, hashedNewPassword, hashedRootWord]
+    return [True, hashedNewPassword, root]

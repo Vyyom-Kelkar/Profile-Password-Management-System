@@ -83,9 +83,12 @@ def newAdmin():
 		return redirect('/newCredentials')
 	return render_template('newAdmin.html', title = 'newAdmin', form = form)
 
-@app.route('/forgotChange')
+@app.route('/forgotChange', methods = ['GET', 'POST'])
 def forgotChange():
 	form = ForgotChangeForm()
+	if request.method == 'POST':
+		checkWithOldPasswordsAndUpdate(request)
+		return redirect('/decisions')
 	return render_template('forgotChange.html', title = 'Forgot Change', form = form)
 
 @app.route('/forgotConfirmation', methods = ['POST'])
