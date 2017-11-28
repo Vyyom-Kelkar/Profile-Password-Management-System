@@ -1,0 +1,19 @@
+<!-- This file creates the template for the main page after login/signup -->
+<!-- Dakota Duncan -->
+
+{% extends "base.html" %}
+{% block head %}
+	<link href="/static/css/decisions.css" rel="stylesheet" media="screen">
+{% endblock %}
+{% block content %}
+<div class = "container">
+	<div class="row justify-content-center">
+		<div class = "col-sm-4 text-center">
+			<a id = "employee" class="btn btn-primary btn-lg" href="/change">Change Password</a>
+		</div>
+		<div class = "col-sm-4 text-center">
+			<a id = "admin" class="btn btn-primary btn-lg" href="/confirm">Admin Settings</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

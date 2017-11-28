@@ -1,0 +1,51 @@
+<!-- This file creates the template for the change password page -->
+<!-- Dakota Duncan -->
+
+{% extends "base.html" %}
+{% block head %}
+	<link href="/static/css/change.css" rel="stylesheet" media="screen">
+{% endblock %}
+{% block content %}
+<div class = "container">
+	<form action = "/change" method = "POST"  name = "login">
+		<div class="form-group row justify-content-center">
+			<div class = "col-sm-4 text-center">
+				<h1>Change Password</h1>
+			</div>
+		</div>
+		<div class="form-group row justify-content-center">
+			<div class = "col-sm-5 text-center">
+				{{ form.email(class_="form-control", placeholder=form.email.label.text)}}
+			</div>
+		</div>
+		<div class="form-group row justify-content-center">
+			<div class = "col-sm-5 text-center">
+				{{ form.oldPassword(class_="form-control", placeholder=form.oldPassword.label.text)}}
+			</div>
+		</div>
+		<div class="form-group row justify-content-center">
+			<div class = "col-sm-5 text-center">
+				{{ form.password(class_="form-control", placeholder=form.password.label.text)}}
+			</div>
+		</div>
+		<div class="form-group row justify-content-center">
+			<div class = "col-sm-5 text-center">
+				{{ form.confirmPassword(class_="form-control", placeholder=form.confirmPassword.label.text)}}
+			</div>
+		</div>
+		<div class="form-group row justify-content-center">
+			<div class = "col-sm-5 text-center">
+				<div class = "progress">
+					<div class = "progress-bar progress-bar-striped progress-bar-animated" role = "progressbar">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class ="form-group row justify-content-center">
+			<div class = "col-sm-5">
+				<button type = "submit" class = "btn btn-primary">Change Password</button>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

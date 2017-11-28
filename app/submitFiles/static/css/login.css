@@ -1,0 +1,44 @@
+/*
+	This file creates the CSS rules for the login page
+	Dakota Duncan
+*/
+
+body{
+	background-image: url('/static/img/hendrix.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+a:hover{
+	 color: magenta;
+}
+
+h1{
+	text-shadow: 0 2px 2px magenta;
+}
+
+.btn{
+	color: white;
+	background: repeating-radial-gradient(circle at center,red, black 5%, green 5%, blue 10%);
+	border-color: white;
+}
+
+.btn:hover{
+	border-color: magenta;
+}
+
+#email{
+	color: purple;
+}
+
+#password{
+	color: purple;
+}
+
+#email:focus{
+	border-color: purple;
+}
+
+#password:focus{
+	border-color: purple;
+}

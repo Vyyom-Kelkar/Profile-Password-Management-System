@@ -1,0 +1,55 @@
+/*
+	This file creates the CSS rules for the new credentials page
+	Dakota Duncan
+*/
+
+body{
+	background-image: url('/static/img/floyd.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+h1{
+	color: black;
+	text-shadow: 0 2px 2px white;
+}
+
+li{
+	list-style-type: none;
+}
+
+.btn{
+	color: white;
+	background-color: black;
+	border-color: white;
+}
+
+.btn:hover{
+	color: black;
+	background: white;
+	border-color: black;
+}
+
+#email{
+	color: blue;
+}
+
+#email:focus{
+	border-color: blue;
+}
+
+#password{
+	color: green;
+}
+
+#password:focus{
+	border-color: green;
+}
+
+#confirmPassword{
+	color: red;
+}
+
+#confirmPassword:focus{
+   	border-color: red;
+}

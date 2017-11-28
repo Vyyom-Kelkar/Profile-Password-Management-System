@@ -1,0 +1,27 @@
+/*
+	This file creates the CSS rules for the admin page
+	Dakota Duncan
+*/
+
+body{
+	background-image: url('/static/img/doors.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.btn{
+	color: white;
+	background-color: black;
+	border-color: white;
+}
+
+.btn:hover{
+	color: black;
+	background-color: white;
+	border-color: black;
+}
+
+h1{
+	color: black;
+	text-shadow: 0 2px 2px grey;
+}

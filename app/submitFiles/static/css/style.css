@@ -1,0 +1,43 @@
+/*
+	This file creates the basic CSS rules for all pages
+	Dakota Duncan
+*/
+
+h1{
+	text-shadow: 0 2px 2px lightgrey;
+	color:	white;
+}
+
+a{
+	color: white;
+}
+
+a:hover{
+	color: lightgrey;
+	text-decoration: none;
+}
+
+.form-control{
+	border-style: inset;
+	border-width: medium; 
+}
+
+.btn{
+	border-style: inset;
+}
+
+.weak{
+	width: 25%;
+}
+
+.intermediate{
+	width: 50%;
+}
+
+.good{
+	width: 75%;
+}
+
+.great{
+	width: 100%;
+}
