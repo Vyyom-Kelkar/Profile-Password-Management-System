@@ -1,7 +1,8 @@
+# This file handles the tokens for forgotten passwords
+# Arthur Nyoni
+
 import uuid
-
 from sqlalchemy import update
-
 from app.models import User, engine, mysession
 
 secret = 'Gr8Responsibility'
@@ -30,7 +31,7 @@ class ResetTokenGenerator:
         token_kill = update(User).where(User.email==user_email).values(token="")
         engine.execute(token_kill)
 
-# Check provided token against token stored in db and return True only if matched
+	# Check provided token against token stored in db and return True only if matched
     def check_token(self,user_email, token):
         #Retrieve db token for given usermail
         token_list = mysession.query(User).filter_by(user_email=user_email).all()
