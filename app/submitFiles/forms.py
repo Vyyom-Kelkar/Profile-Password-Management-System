@@ -1,3 +1,6 @@
+# This file creates the forms for the views with validations
+# Dakota Duncan
+
 from flask_wtf import Form
 from wtforms import BooleanField, StringField, PasswordField, IntegerField, RadioField
 from wtforms.validators import DataRequired

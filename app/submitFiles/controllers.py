@@ -1,3 +1,7 @@
+# This file creates the functions for the API methods and password/credential checks
+# Vyyom Kelkar, Brett Boehmer, Dakota Duncan
+
+
 from app import db
 from flask import request
 from models import mysession, User, Admin_Setting, Old_Password, Common_Password, engine
@@ -9,11 +13,15 @@ from hashPassword import hashPassword
 from verify import verifyPassword
 
 '''
+
+API RESTful methods syntax:
+
+
 1) GET : list_object = mysession.query(TABLE_NAME).filter_by(expressions with commas).all()
-	use a for loop to iterate through the list and handle attributes
+		 use a for loop to iterate through the list and handle attributes
 
 2) PATCH (update) : patch_object = update(TABLE_NAME).where(expressions with commas).values(attribute_name = "value")
-		   engine.execute(patch_object)
+		   			engine.execute(patch_object)
 
 3) POST : row_object = TABLE_NAME(list of attribute_name = "value")
 		  mysession.add(row_object)
@@ -38,6 +46,7 @@ mysession.add(row)
 
 '''
 
+# Function to verify user login
 def verify(request):
 	userEmail = request.form['email']
 	userPass = request.form['password']
@@ -48,6 +57,7 @@ def verify(request):
 	else:
 		return False
 
+# Function to verify the users credentials when changing password
 def verifyChange(request):
 	userEmail = request.form['email']
 	userPass = request.form['oldPassword']
@@ -58,6 +68,7 @@ def verifyChange(request):
 	else:
 		return False
 
+# Function to ensure that the entered email is unique
 def uniqueEmail(request):
 	userEmail = request.form['email']
 	user = mysession.query(User).filter_by(email=userEmail).all()
@@ -66,11 +77,13 @@ def uniqueEmail(request):
 	else:
 		return True
 
+# Function to retrieve a company's password requirements from the database
 def getCompanyRequirements(company):
 	settings = mysession.query(Admin_Setting).filter_by(company_name=company).first()
 	settingsArray = [settings.password_length,settings.require_caps,settings.require_lowercase,settings.require_number,settings.require_special,settings.expiration_days]
 	return settingsArray 
 
+# Function to add a user to the database
 def addUser(user, password):
 	today = datetime(1996, 1, 2, 3, 4, 5)
 	userName = user[0]
@@ -87,24 +100,28 @@ def addUser(user, password):
   	mysession.add(myUser)
 	mysession.commit()
 
+# Function to change the password of a user
 def changePassword(request):
 	userEmail = request.form['email']
 	newPassword = request.form['password']
 	newPassword = hashPassword(newPassword)
 	mysession.query(User).filter_by(email=userEmail).update({"current_password": newPassword})
 
+# Function to retrieve the company requirements for a user from the database
 def getCompany(request):
 	userEmail = request.form['email']
 	user = mysession.query(User).filter_by(email=userEmail).first()
 	userCompany = user.company_name
 	return getCompanyRequirements(userCompany)
 
+# Function to retrieve the comapny name for a user from the database
 def company(request):
 	userEmail = request.form['email']
 	user = mysession.query(User).filter_by(email=userEmail).first()
 	userCompany = user.company_name
 	return userCompany
 
+# Function to check if the company exists
 def companyExists(request):
 	userCompany = request.form['company']
 	company = mysession.query(Admin_Setting).filter_by(company_name=userCompany).all()
@@ -113,6 +130,7 @@ def companyExists(request):
 	else:
 		return False
 
+# Function to perform checks for a changed password and update accordingly
 def checkWithOldPasswordsAndUpdateChange(request):
 	email = request.form['email']
 	password = request.form['password']
@@ -134,6 +152,7 @@ def checkWithOldPasswordsAndUpdateChange(request):
 	else:
 	  return False 
 
+# Function to perform checks for a new password and update accordingly
 def checkWithOldPasswordsAndUpdate(request):
 	userEmail = request.form['email']
 	password = request.form['password']
@@ -143,13 +162,9 @@ def checkWithOldPasswordsAndUpdate(request):
 		oldPasswordsArr.append(i.hashed_password)
 
 	responseArray = similar(password, oldPasswordsArr)
-	print responseArray	
-#if(responseArray[0]):
-#	   newHashedPassword = responseArray[1]
-#	   mysession.query(User).filter_by(email=userEmail).update({"current_password": newHashedPassword})
-#	else:
-#	  return False 
+	print responseArray
 
+# Function to add company password requirements to the database
 def addAdminSettings(form, companyName):
 	passLength = form.plength.data
 	requireCaps = form.caps.data
@@ -162,6 +177,7 @@ def addAdminSettings(form, companyName):
 	mysession.add(mySettings)
 	mysession.commit()
 
+# Function to verify an admin 
 def verifyAdmin(request):
 	userEmail = request.form['email']
 	userPass = request.form['password']
@@ -172,6 +188,7 @@ def verifyAdmin(request):
 	else:
  		return False
 
+# Function to update the company password settings in the database
 def updateAdminSettings(form, companyName):
 	passLength = form.plength.data
 	requireCaps = form.caps.data
