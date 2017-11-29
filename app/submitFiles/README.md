@@ -17,3 +17,11 @@ External libraries/frameworks used as-is or with minor modifications:
 
 5)	SHA256 encryption algorithm from the PassLib library - used the encryption algorithm as is to store passwords in the database
 	https://passlib.readthedocs.io/
+	
+Group Members - 
+1)	Yaman Alslaiti (password strength bar)
+2)	Brett Boehmer (database design and API)
+3)	Dakota Duncan (UI and views)
+4)	Vyyom Kelkar (database design and API)
+5)	Arthur Nyoni (forgotten password utilities)
+6)	Jacob Shoaf (password similarity algorithm)
