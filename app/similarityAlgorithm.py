@@ -1,7 +1,13 @@
 from passlib.hash import sha256_crypt
 import sys
 
-
+#old passwords are hashed new password is not
+def compareToOldPasswords(oldPasswords, newPassword):
+    for password in oldPasswords:
+        if ( sha256_crypt.verify(newPassword, str(password)) ):
+            return True
+    return False
+#Rules for mangling passwords
 def incrementNumber(newPassword, startAtFront):
     passwordRet = []
     if not (startAtFront):
@@ -34,12 +40,6 @@ def decrementNumber(newPassword, startAtFront):
             break
     return passwordRet
 
-#old passwords are hashed new password is not
-def compareToOldPasswords(oldPasswords, newPassword):
-    for password in oldPasswords:
-        if ( sha256_crypt.verify(newPassword, str(password)) ):
-            return True
-    return False
 
 def allPossibleNumberChanges(newPassword, startAtFront, numMaxCheck):
     passwordRet = []
@@ -190,6 +190,8 @@ def similar(newPassword, oldPasswords):
 
     if(similarityDifficulty == 4):
         numMaxCheck = 12
+        #create a list of all mangled passwords 
+        #mangle password based on rules above common rules can be combined
         generatedPasswords.append( (newPassword) )
         generatedPasswords.append( (root ) )
         generatedPasswords.extend( duplicateFront(newPassword))
@@ -207,17 +209,19 @@ def similar(newPassword, oldPasswords):
         generatedPasswords.extend( capitalizeALetter(newPassword, True, 5))
         generatedPasswords.extend( lowercaseALetter(newPassword, True, 5))
     elif (similarityDifficulty == 3):
-        print "go"
+        print "Different Similarity levels"
 
     elif (similarityDifficulty == 2):
-        print "cool"
+        print "Depending on rule decisions"
 
     else: #must be (similarityDifficulty == 1):
-        print "wow"
+        print "Up to the admin to decide what they want"
     print generatedPasswords
+    #check if the any of the mangled passwords match the old passwords
     for password in generatedPasswords:
         if (compareToOldPasswords(oldPasswords, str(password))):
             return [False, "Too similar", root]
+    #one way hash the password
     hashedNewPassword = sha256_crypt.using(rounds=1100).hash(newPassword)
 #hashedRootWord = sha256_crypt.using(rounds=1100).using().hash(root)
     #print (True, hashedNewPassword, hashedRootWord, NewPassword, hashedRootWord)
