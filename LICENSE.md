@@ -1,4 +1,4 @@
-Copyright (c) 2011-2017 GitHub Inc.
+Copyright (c) 2011-2018 GitHub Inc.
 
 This GitHub Repository was used for collaboration on course work that has been submitted to The Ohio State University. Copying this code for use in other academic course projects is plagiarism. 
 
